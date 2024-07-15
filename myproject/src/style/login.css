@@ -1,0 +1,33 @@
+.landing_head{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 222px;
+    background-color: #00a884;
+}
+.landing_window
+{
+    z-index: 2;
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    width: 900px;
+    height:500px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 17px 50px 0 rgba(11, 20, 26, .19), 0 12px 15px 0 rgba(11, 20, 26, .24);
+}
+.landing_h{
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: flex-start;
+    width: 1000px;
+    min-height: 39px;
+    margin: 27px auto 28px auto;
+}
