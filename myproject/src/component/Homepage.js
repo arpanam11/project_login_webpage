@@ -59,10 +59,7 @@ const Homepage = () => {
         </Header>
         <Content
        className='content'>
-          Content bdf
-          efsdgdf
-          rgrdgf
-          react
+        here is my content 
         </Content>
       </Layout>
     </Layout>
