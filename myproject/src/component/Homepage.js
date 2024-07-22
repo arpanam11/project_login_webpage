@@ -22,7 +22,7 @@ const Homepage = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
+          theme="light"
           mode="inline"
           defaultSelectedKeys={['1']}
           items={[
@@ -56,6 +56,7 @@ const Homepage = () => {
               height: 64,
             }}
           />
+          <Button>Logout</Button>
         </Header>
         <Content
        className='content'>
