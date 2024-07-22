@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../style/login.css';
-import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,13 +13,11 @@ const Login = () => {
     setPassword(event.target.value);
   };
   const handleSubmit = async (e) => {
-    const navigate = useNavigate();
     e.preventDefault();
-    console.log({ username, password});
+    console.log({ username, password });
     const empData = { username, password };
     try {
       await axios.post('http://localhost:5000/users', empData);
-      navigate('/home');
     } catch (err) {
       console.log(err.message);
     }
