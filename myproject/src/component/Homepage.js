@@ -60,7 +60,8 @@ const Homepage = () => {
         </Header>
         <Content
        className='content'>
-        here is my content 
+        here is my content   s 
+
         </Content>
       </Layout>
     </Layout>
