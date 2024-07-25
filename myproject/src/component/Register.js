@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'; // Assuming you're using a frontend framework
+import axios from 'axios'; 
 import '../style/login.css';
 import {  Link } from 'react-router-dom';
 const Register = () => {
@@ -18,22 +18,15 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/users', formData); // Replace with your API endpoint
+      const response = await axios.post('http://localhost:5000/users', formData); 
       console.log('Registration successful:', response.data);
-      // Handle successful registration (e.g., redirect to login page)
     } catch (error) {
       console.error('Registration error:', error);
-      setRegistrationError('Registration failed. Please try again.'); // Display user-friendly error message
+      setRegistrationError('Registration failed. Please try again.'); 
     }
   };
 
-  // Optional: Implement form validation (consider a validation library like Yup)
 
-  useEffect(() => {
-    // Code to fetch initial data from db.json (if needed)
-    // This is not recommended for production due to security concerns
-    // Consider using a secure backend API for user registration
-  }, []);
 
   return (
     <div>
@@ -47,24 +40,24 @@ const Register = () => {
           <label>Username:</label>
           <input
             type="text"
-            className="form-control" // Assuming Bootstrap classes
+            className="form-control" 
             id="username"
             placeholder="Enter username"
             value={formData.username}
             onChange={handleChange}
-            name="username" // Required for state update in handleChange
+            name="username" 
           />
         </div>
         <div className="form-group">
           <label>Password:</label>
           <input
             type="password"
-            className="form-control" // Assuming Bootstrap classes
+            className="form-control" 
             id="password"
             placeholder="Enter password"
             value={formData.password}
             onChange={handleChange}
-            name="password" // Required for state update in handleChange
+            name="password" 
           />
         </div>
         <button type="submit" class="btn btn-primary" >Register</button>
