@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../style/login.css';
-import { useNavigate  , Link} from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -62,7 +62,7 @@ const Login = () => {
       setErrorMessage('Login failed. Please try again.'); // Generic error message
     }
   };
-
+ 
   return (
     <div>
       <div className='landing_head'>Login</div>
@@ -86,7 +86,13 @@ const Login = () => {
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
-          <p> <Link>Register with us</Link></p>
+          <div className='d-flex'>
+
+            {/* ... form fields and logic */}
+            <Link to="/register" >Register</Link>
+
+           
+          </div>
         </form>
       </div>
     </div>
