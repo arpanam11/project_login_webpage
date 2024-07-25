@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../style/login.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  , Link} from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -49,7 +49,7 @@ const Login = () => {
     setErrorMessage(''); // Clear error message before API call
 
     try {
-      const response = await axios.post('http://localhost:5000/users', {
+      const response = await axios.get('http://localhost:5000/users', {
         username,
         password,
       });
@@ -68,25 +68,25 @@ const Login = () => {
       <div className='landing_head'>Login</div>
       <div className='landing_h'></div>
       <div className='landing_window p-1'>
-      <img src="./login.png" alt="Login Logo" class="img-fluid w-25 mx-auto d-block" />
+        <img src="./login.png" alt="Login Logo" class="img-fluid w-25 mx-auto d-block" />
 
-      {errorMessage && (
-                <div className="alert alert-danger" role="alert">
-                  {errorMessage}
-                </div>
-              )}
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit} className='px-5 pt-5'>
           <div class="form-group">
             <label >Username:</label>
-            <input type="username" class="form-control" id="username" placeholder="Enter username"  value={username} onChange={handleUsernameChange} />
+            <input type="username" class="form-control" id="username" placeholder="Enter username" value={username} onChange={handleUsernameChange} />
           </div>
           <div class="form-group">
             <label>Password:</label>
-            <input type="password" class="form-control" id="password" placeholder="Enter password"   value={password} onChange={handlePasswordChange} />
+            <input type="password" class="form-control" id="password" placeholder="Enter password" value={password} onChange={handlePasswordChange} />
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>
-
+          <p> <Link>Register with us</Link></p>
         </form>
       </div>
     </div>
