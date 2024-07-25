@@ -44,7 +44,7 @@ const Register = () => {
 
       <form onSubmit={handleSubmit} className='px-5 pt-5'>
         <div className="form-group mt-3">
-          <label htmlFor="username">Username:</label>
+          <label>Username:</label>
           <input
             type="text"
             className="form-control" // Assuming Bootstrap classes
@@ -56,7 +56,7 @@ const Register = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label>Password:</label>
           <input
             type="password"
             className="form-control" // Assuming Bootstrap classes
