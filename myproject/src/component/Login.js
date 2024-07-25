@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -15,10 +15,10 @@ const Login = () => {
     setPassword(event.target.value);
   };
   const validateCredentials = () => {
-  
+
     if (username.trim() === '') {
       setErrorMessage('Username cannot be empty.');
-      return false; 
+      return false;
     }
     if (password.trim() === '') {
       setErrorMessage('Password cannot be empty.');
@@ -28,39 +28,39 @@ const Login = () => {
     const validUser = {
       username: 'Admin',
       password: 'Admin@2024'
-    }; 
+    };
 
     if (username !== validUser.username || password !== validUser.password) {
       setErrorMessage('Invalid username or password.');
       return false;
     }
 
-    return true; 
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateCredentials()) {
-      return; 
+      return;
     }
 
-    setErrorMessage(''); 
+    setErrorMessage('');
 
     try {
       const response = await axios.get('http://localhost:5000/users', {
         username,
         password,
       });
-      console.log('Login successful:', response.data); 
+      console.log('Login successful:', response.data);
       navigate('/home');
 
     } catch (err) {
       console.error(err.message);
-      setErrorMessage('Login failed. Please try again.'); 
+      setErrorMessage('Login failed. Please try again.');
     }
   };
- 
+
   return (
     <div>
       <div className='landing_head'>Login</div>
@@ -85,10 +85,7 @@ const Login = () => {
 
           <button type="submit" class="btn btn-primary">Submit</button>
           <div className='d-flex'>
-
             <Link to="/register" >Register</Link>
-
-           
           </div>
         </form>
       </div>
