@@ -57,7 +57,7 @@ const Register = () => {
                             name="password"
                         />
                     </div>
-                    <button type="submit" class="btn btn-primary" >Register</button>
+                    <button type="submit" class="btn btn-success" >Register</button>
                     {registrationError && <p className="error">{registrationError}</p>}
                     <br></br>
                     <p className='pt-4'>

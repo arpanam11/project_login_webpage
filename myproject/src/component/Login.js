@@ -83,7 +83,7 @@ const Login = () => {
             <input type="password" class="form-control" id="password" placeholder="Enter password" value={password} onChange={handlePasswordChange} />
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-success">Submit</button>
           <div className='d-flex'>
             <Link to="/register" >Register</Link>
           </div>
