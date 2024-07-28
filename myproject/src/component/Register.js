@@ -34,7 +34,8 @@ const Register = () => {
 
                 <form onSubmit={handleSubmit} className='px-5 pt-5'>
                     <div className="form-group mt-3">
-                        <label>Username:</label>
+                        <label>Username</label>
+
                         <input
                             type="text"
                             className="form-control"
@@ -46,7 +47,7 @@ const Register = () => {
                         />
                     </div>
                     <div className="form-group">
-                        <label>Password:</label>
+                        <label>Password</label>
                         <input
                             type="password"
                             className="form-control"
@@ -61,7 +62,7 @@ const Register = () => {
                     {registrationError && <p className="error">{registrationError}</p>}
                     <br></br>
                     <p className='pt-4'>
-                        <Link to="/">Already have an account? Login</Link>
+                        <Link to="/">Already have an account? Login </Link>
                     </p>
                 </form>
             </div>
