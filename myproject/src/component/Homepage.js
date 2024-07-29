@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import '../style/content.css'
-
+import {  Link } from 'react-router-dom';
 const { Header, Sider, Content } = Layout;
 
 const Homepage = () => {
@@ -17,6 +17,7 @@ const Homepage = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+ 
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -56,7 +57,7 @@ const Homepage = () => {
               height: 64,
             }}
           />
-          <Button>Logout</Button>
+          <Button><Link to="/" >Logout</Link></Button>
         </Header>
         <Content
        className='content'>
