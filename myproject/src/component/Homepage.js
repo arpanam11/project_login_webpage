@@ -46,7 +46,7 @@ const Homepage = () => {
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header style={{ padding: 0, background: colorBgContainer }} className='d-flex justify-content-between'>
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -57,7 +57,7 @@ const Homepage = () => {
               height: 64,
             }}
           />
-          <Button><Link to="/" >Logout</Link></Button>
+          <Button className='mr-5 mt-3 btn btn-info'><Link to="/"  className='p-2'>Logout</Link></Button>
         </Header>
         <Content
        className='content'>
