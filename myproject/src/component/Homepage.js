@@ -9,6 +9,7 @@ import {
 import { Button, Layout, Menu, theme } from 'antd';
 import '../style/content.css'
 import {  Link } from 'react-router-dom';
+import Section from './Section';
 const { Header, Sider, Content } = Layout;
 
 const Homepage = () => {
@@ -61,7 +62,7 @@ const Homepage = () => {
         </Header>
         <Content
        className='content'>
-        here is my content   s 
+      <Section/>
 
         </Content>
       </Layout>
