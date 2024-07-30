@@ -22,7 +22,7 @@ const Homepage = () => {
     }
   }
   return (
-
+<div className='container'>
     <div className="row">
       <div className='col-lg-5 col-md-5 col-sm flex-container'>
         <div className="cardBox">
@@ -35,9 +35,10 @@ const Homepage = () => {
           ))}
         </div>
       </div>
-      <div className='col-lg-5 col-md-5 col-sm flex-container'>
+      <div className='col-lg-7 col-md-5 col-sm flex-container'>
 
       </div>
+    </div>
     </div>
 
   )
