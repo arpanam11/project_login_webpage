@@ -25,5 +25,12 @@
       "username": "aa",
       "password": ""
     }
+  ],
+  "project":[
+    {
+      "id": "93e2",
+      "projectName": "JTC",
+      "location": "Nagpur"
+    }
   ]
 }
