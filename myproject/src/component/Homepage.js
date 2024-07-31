@@ -33,6 +33,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className='col-lg-7 col-md-5 col-sm flex-container'>
+            <p>fhi</p>
           </div>
         </div>
       </div>
