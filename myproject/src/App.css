@@ -44,4 +44,86 @@
   position: relative;
   margin-bottom: 30px;
   box-shadow: 0 .46875rem 2.1875rem rgba(90, 97, 105, .1), 0 .9375rem 1.40625rem rgba(90, 97, 105, .1), 0 .25rem .53125rem rgba(90, 97, 105, .12), 0 .125rem .1875rem rgba(90, 97, 105, .1);
+}.main {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.sidebar-logo {
+  padding: 10px 20px;
+  font-size: 1.5em;
+  text-align: center;
+  border-bottom: 1px solid #495057;
+}
+
+.sidebar-nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav .nav-item {
+  width: 100%;
+}
+
+.sidebar-nav .nav-link {
+  display: block;
+  padding: 15px 20px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.sidebar-nav .nav-link:hover {
+  background-color: #495057;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  padding: 10px 20px;
+}
+
+.navbar .navbar-brand {
+  font-size: 1.5em;
+}
+
+.navbar .nav {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar .nav .nav-item {
+  margin-right: 20px;
+}
+
+.navbar .nav .nav-item .nav-link {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Body Content Styles */
+.contain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.body-content {
+  padding: 20px;
+  background-color: #f1f1f1;
+  flex: 1;
 }

@@ -2,23 +2,18 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import Navbar from './Navbar'
 
-const layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
-    <div>
-      <div className='main'>
-        <div className='layout'>
-          <Sidebar />
-          <div className='contain'>
-            <Navbar/>
-            <div className='body-content'>
-              {children}
-            </div>
-          </div>
-
+    <div className="main">
+      <Sidebar />
+      <div className="contain">
+        <Navbar />
+        <div className="body-content">
+          {children}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default layout
+export default Layout;

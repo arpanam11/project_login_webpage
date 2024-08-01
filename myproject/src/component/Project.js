@@ -1,14 +1,15 @@
 import React from 'react'
-import Homepage from './Homepage'
+
+import Layout from '../common/layout'
 
 const Project = () => {
   return (
     <div>
-        <Homepage>
+        <Layout>
             <div>
                 hi
             </div>
-        </Homepage>
+        </Layout>
     </div>
   )
 }
