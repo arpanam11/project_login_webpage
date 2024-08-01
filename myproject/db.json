@@ -26,11 +26,24 @@
       "password": ""
     }
   ],
-  "project":[
+  "project": [
     {
-      "id": "93e2",
+      "id": "30db",
       "projectName": "JTC",
-      "location": "Nagpur"
+      "location": {
+        "country": "india",
+        "state": "maharatra",
+        "city": "nagpur"
+      }
+    },
+    {
+      "id": "1e27",
+      "projectName": "JTc2",
+      "location": {
+        "country": "india",
+        "state": "delhi",
+        "city": "delhi"
+      }
     }
   ]
 }
