@@ -52,8 +52,8 @@
 /* Sidebar Styles */
 .sidebar {
   width: 250px;
-  background-color: #343a40;
-  color: #fff;
+  background-color: #fff;
+  color: #00A76F;
   display: flex;
   flex-direction: column;
   padding-top: 20px;
@@ -68,7 +68,7 @@
 
 .sidebar-nav {
   list-style-type: none;
-  padding: 0;
+  padding: 0px 16px;
   margin: 0;
 }
 
@@ -79,13 +79,15 @@
 .sidebar-nav .nav-link {
   display: block;
   padding: 15px 20px;
-  color: #fff;
+  color: #00A76F;
   text-decoration: none;
+  border-radius: 5px;
   transition: background-color 0.3s;
 }
 
 .sidebar-nav .nav-link:hover {
-  background-color: #495057;
+  background-color: #D6F1E8;
+  color: #00a76f;
 }
 
 /* Navbar Styles */
