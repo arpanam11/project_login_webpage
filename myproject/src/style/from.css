@@ -12,22 +12,22 @@
     color: #333;
   }
   
-  .project-form form {
+  .form {
     display: flex;
     flex-direction: column;
   }
   
-  .project-form form div {
+  .myform form div {
     margin-bottom: 15px;
   }
   
-  .project-form label {
+  .myform label {
     margin-bottom: 5px;
     font-weight: bold;
     display: block;
   }
   
-  .project-form input[type="text"] {
+  .myform input[type="text"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -36,13 +36,13 @@
     box-sizing: border-box;
   }
   
-  .project-form input[type="text"]:focus {
+  .myform input[type="text"]:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
   
-  .project-form button {
+  .myform button {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -53,6 +53,9 @@
     transition: background-color 0.3s;
     margin-top: 10px;
   }
-  .project-form button:hover {
+  .myformbutton:hover {
     background-color: #0056b3;
+  }
+  thead{
+    background-color: #F4F6F8;
   }

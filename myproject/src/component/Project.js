@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import '../style/from.css';
-import Layout from '../common/layout';
 import axios from 'axios';
+import Layout from '../common/layout';
+import {
+  Container,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField
+} from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
+import Swal from 'sweetalert2';
 
 const Project = () => {
   const [projectName, setProjectName] = useState('');
-  const [fromData, setFromData] = useState([]);
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
+  const [formData, setFormData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentProjectId, setCurrentProjectId] = useState(null);
 
   useEffect(() => {
     fetchProjects();
@@ -18,7 +33,7 @@ const Project = () => {
   const fetchProjects = async () => {
     try {
       const response = await axios.get('http://localhost:5000/project');
-      setFromData(response.data);
+      setFormData(response.data);
     } catch (error) {
       console.error('Error fetching projects:', error);
     }
@@ -37,108 +52,176 @@ const Project = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/project', projectData);
-      if (response.status === 201) {
-        alert('Project added successfully!');
-        fetchProjects(); // Refresh the project list
-        setProjectName('');
-        setCountry('');
-        setState('');
-        setCity('');
-        setIsModalOpen(false);
+      if (isEditing) {
+        await axios.put(`http://localhost:5000/project/${currentProjectId}`, projectData);
+        Swal.fire('Success', 'Project updated successfully!', 'success');
       } else {
-        alert('Failed to add project.');
+        await axios.post('http://localhost:5000/project', projectData);
+        Swal.fire('Success', 'Project added successfully!', 'success');
       }
+      fetchProjects();
+      setProjectName('');
+      setCountry('');
+      setState('');
+      setCity('');
+      setIsModalOpen(false);
+      setIsEditing(false);
+      setCurrentProjectId(null);
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while adding the project.');
+      Swal.fire('Error', 'An error occurred while saving the project.', 'error');
     }
   };
 
+  const handleEdit = (project) => {
+    setProjectName(project.projectName);
+    setCountry(project.location.country);
+    setState(project.location.state);
+    setCity(project.location.city);
+    setCurrentProjectId(project.id);
+    setIsEditing(true);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to delete this project?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await axios.delete(`http://localhost:5000/project/${id}`);
+        Swal.fire('Deleted!', 'Project deleted successfully!', 'success');
+        fetchProjects();
+      } catch (error) {
+        console.error('Error deleting project:', error);
+        Swal.fire('Error', 'An error occurred while deleting the project.', 'error');
+      }
+    }
+  };
+
+  const columns = [
+    { field: 'projectName', headerName: 'Project Name', width: 200 },
+    { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'state', headerName: 'State', width: 150 },
+    { field: 'city', headerName: 'City', width: 150 },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      width: 200,
+      renderCell: (params) => (
+        <>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={() => handleEdit(params.row)}
+            style={{ marginRight: '10px' }}
+          >
+            Edit
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleDelete(params.row.id)}
+          >
+            Delete
+          </Button>
+        </>
+      ),
+    },
+  ];
+
+  const rows = formData.map((project) => ({
+    id: project.id,
+    projectName: project.projectName,
+    country: project.location.country,
+    state: project.location.state,
+    city: project.location.city,
+  }));
+
   return (
     <Layout>
-      <div className='container'>
-        <div className='card'>
-          <div className='card-title'>
-            <h2 className='text-center mt-4'>Project Listing</h2>
-          </div>
-          <div className='card-body'>
-            <div className='d-flex justify-content-end mb-4'>
-              <button className='btn btn-info text-white' onClick={() => setIsModalOpen(true)}>Create (+)</button>
+      <Container>
+        <Card>
+          <CardContent>
+            <Typography variant="h4" className="text-center mt-4">
+              Project Listing
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => { setIsModalOpen(true); setIsEditing(false); }}
+              style={{ marginBottom: '20px', marginTop: '20px' }}
+            >
+              Create (+)
+            </Button>
+            <div style={{ height: 372, width: '100%' }}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                checkboxSelection={false}
+                pagination
+              />
             </div>
-            <table className='table table-bordered'>
-              <thead className='bg-dark text-white'>
-                <tr>
-                  <td>Project Name</td>
-                  <td>Country</td>
-                  <td>State</td>
-                  <td>City</td>
-                </tr>
-              </thead>
-              <tbody>
-                {fromData.map((project) => (
-                  <tr key={project.id}>
-                    <td>{project.projectName}</td>
-                    <td>{project.location.country}</td>
-                    <td>{project.location.state}</td>
-                    <td>{project.location.city}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+          </CardContent>
+        </Card>
 
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setIsModalOpen(false)}>&times;</span>
-            <div className="project-form">
-              <h2>Add Project</h2>
-              <form onSubmit={handleSubmit}>
-                <div>
-                  <label>Project Name:</label>
-                  <input
-                    type="text"
-                    value={projectName}
-                    onChange={(e) => setProjectName(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>Country:</label>
-                  <input
-                    type="text"
-                    value={country}
-                    onChange={(e) => setCountry(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>State:</label>
-                  <input
-                    type="text"
-                    value={state}
-                    onChange={(e) => setState(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label>City:</label>
-                  <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
-                  />
-                </div>
-                <button type="submit">Add Project</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+        <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <DialogTitle>{isEditing ? 'Edit Project' : 'Add Project'}</DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleSubmit} className='myform'>
+              <TextField
+                label="Project Name"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="Country"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="State"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              <TextField
+                label="City"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                required
+                fullWidth
+                margin="normal"
+              />
+              <DialogActions>
+                <Button onClick={() => setIsModalOpen(false)} color="error" variant="contained">
+                  Cancel
+                </Button>
+                <Button type="submit" color="primary" variant="contained">
+                  {isEditing ? 'Update Project' : 'Add Project'}
+                </Button>
+              </DialogActions>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </Container>
     </Layout>
   );
 };

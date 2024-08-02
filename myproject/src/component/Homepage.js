@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Layout from '../common/layout'; 
+import Layout from '../common/layout';
+import { Container, Grid, Card, CardContent, Typography } from '@mui/material';
 
 const Homepage = () => {
-  const [projectData, setProjectData] = useState([]); 
+  const [projectData, setProjectData] = useState([]);
 
   useEffect(() => {
     getProjectSite();
@@ -20,23 +21,33 @@ const Homepage = () => {
   };
 
   return (
-    <Layout> 
-      <div className='container'>
-        <div className="row">
-          <div className='col-lg-5 col-md-5 col-sm flex-container'>
+    <Layout>
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={5}>
             <div className="cardBox">
               {projectData.map((item, index) => (
-                <div key={index}>
-                  <p>{item.projectName}</p>
-                </div>
+                <Card key={index} variant="outlined" style={{ marginBottom: '16px' }}>
+                  <CardContent>
+                    <Typography variant="h6">
+                      {item.projectName}
+                    </Typography>
+                  </CardContent>
+                </Card>
               ))}
             </div>
-          </div>
-          <div className='col-lg-7 col-md-5 col-sm flex-container'>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14888.363567975939!2d79.07580304999999!3d21.1089422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1722429864542!5m2!1sen!2sin" style={{height:"200px" , width:"500px"}}  allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-        </div>
-      </div>
+          </Grid>
+          <Grid item xs={12} md={7}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14888.363567975939!2d79.07580304999999!3d21.1089422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1722429864542!5m2!1sen!2sin"
+              style={{ height: "400px", width: "100%" }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Grid>
+        </Grid>
+      </Container>
     </Layout>
   );
 };
