@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="navbar navbar-inverse navbar-fixed-top bg-light">
       <div className="container-fluid">
         <div className="navbar-header">
-          <a className="navbar-brand" href="#">WebSite Name here</a>
+          <a className="navbar-brand" href="#">WebSite Name</a>
          
         </div>
         <ul className="nav navbar-nav">
