@@ -15,12 +15,14 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
+import Select from 'react-select'; // For dropdowns
+import { Country, State, City } from 'country-state-city'; // For country-state-city data
 
 const Project = () => {
   const [projectName, setProjectName] = useState('');
-  const [country, setCountry] = useState('');
-  const [state, setState] = useState('');
-  const [city, setCity] = useState('');
+  const [country, setCountry] = useState(null);
+  const [state, setState] = useState(null);
+  const [city, setCity] = useState(null);
   const [image, setImage] = useState(null); // New state for image
   const [formData, setFormData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,9 +57,9 @@ const Project = () => {
     const projectData = {
       projectName,
       location: {
-        country,
-        state,
-        city,
+        country: country ? country.name : '',
+        state: state ? state.name : '',
+        city: city ? city.name : '',
       },
       image, // Add the Base64 image string here
     };
@@ -71,27 +73,34 @@ const Project = () => {
         Swal.fire('Success', 'Project added successfully!', 'success');
       }
       fetchProjects();
-      setProjectName('');
-      setCountry('');
-      setState('');
-      setCity('');
-      setImage(null);
-      setIsModalOpen(false);
-      setIsEditing(false);
-      setCurrentProjectId(null);
+      resetForm();
     } catch (error) {
       console.error('Error:', error);
       Swal.fire('Error', 'An error occurred while saving the project.', 'error');
     }
   };
-  
+
+  const resetForm = () => {
+    setProjectName('');
+    setCountry(null);
+    setState(null);
+    setCity(null);
+    setImage(null);
+    setIsModalOpen(false);
+    setIsEditing(false);
+    setCurrentProjectId(null);
+  };
 
   const handleEdit = (project) => {
+    const selectedCountry = Country.getAllCountries().find((c) => c.name === project.country);
+    const selectedState = selectedCountry ? State.getStatesOfCountry(selectedCountry.isoCode).find((s) => s.name === project.state) : null;
+    const selectedCity = selectedState ? City.getCitiesOfState(selectedCountry.isoCode, selectedState.isoCode).find((c) => c.name === project.city) : null;
+
     setProjectName(project.projectName);
-    setCountry(project.country);
-    setState(project.state);
-    setCity(project.city);
-    setImage(project.image)
+    setCountry(selectedCountry);
+    setState(selectedState);
+    setCity(selectedCity);
+    setImage(project.image);
     setCurrentProjectId(project.id);
     setIsEditing(true);
     setIsModalOpen(true);
@@ -126,7 +135,7 @@ const Project = () => {
       headerName: 'Image',
       width: 150,
       renderCell: (params) => (
-        <img src={params.row.image} alt={params.row.projectName} style={{ width: '50px', height: '50px' ,borderRadius:'50%'}} />
+        <img src={params.row.image} alt={params.row.projectName} style={{ width: '50px', height: '50px', borderRadius: '50%' }} />
       ),
     },
     { field: 'projectName', headerName: 'Project Name', width: 200 },
@@ -157,7 +166,6 @@ const Project = () => {
         </>
       ),
     },
-   
   ];
 
   const rows = formData.map((project) => ({
@@ -166,7 +174,7 @@ const Project = () => {
     country: project.location.country,
     state: project.location.state,
     city: project.location.city,
-    image: project.image, // Include the image field here
+    image: project.image,
   }));
 
   return (
@@ -210,37 +218,68 @@ const Project = () => {
                 fullWidth
                 margin="normal"
               />
-              <TextField
-                label="Country"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
+               <br></br>
+              <label>Location</label>
+              <Select
+                options={Country.getAllCountries().map((country) => ({ value: country, label: country.name }))}
+                value={country ? { value: country, label: country.name } : null}
+                onChange={(selectedOption) => {
+                  setCountry(selectedOption.value);
+                  setState(null);
+                  setCity(null);
+                }}
+                placeholder="Select Country"
+                isClearable
                 required
-                fullWidth
-                margin="normal"
               />
-              <TextField
-                label="State"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                label="City"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                required
-                fullWidth
-                margin="normal"
-              />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                style={{ marginTop: '15px' }}
-              />
-              <DialogActions>
+              {country && (
+                <Select
+                  options={State.getStatesOfCountry(country.isoCode).map((state) => ({ value: state, label: state.name }))}
+                  value={state ? { value: state, label: state.name } : null}
+                  onChange={(selectedOption) => {
+                    setState(selectedOption.value);
+                    setCity(null);
+                  }}
+                  placeholder="Select State"
+                  isClearable
+                  required
+                />
+              )}
+              {state && (
+                <Select
+                  options={City.getCitiesOfState(country.isoCode, state.isoCode).map((city) => ({ value: city, label: city.name }))}
+                  value={city ? { value: city, label: city.name } : null}
+                  onChange={(selectedOption) => setCity(selectedOption.value)}
+                  placeholder="Select City"
+                  isClearable
+                  required
+                />
+              )}
+               <br></br>
+
+               <label>Project Image</label>
+
+{/* Image Upload */}
+<TextField
+  type="file"
+  accept="image/*"
+  fullWidth
+  onChange={handleImageChange}
+  style={{ marginTop: '15px' }}
+/>
+
+{/* Image Preview (for edit mode) */}
+{image && (
+  <div style={{ marginTop: '15px' }}>
+    <Typography variant="subtitle1">Current Image:</Typography>
+    <img
+      src={image}
+      alt="Current Project"
+      style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }}
+    />
+  </div>
+)}
+              <DialogActions className='mt-5'>
                 <Button onClick={() => setIsModalOpen(false)} color="error" variant="contained">
                   Cancel
                 </Button>
