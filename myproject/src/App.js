@@ -14,6 +14,7 @@ function App() {
           <Route path="/home" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/project" element={<Project />} />
+          {/* //routing */}
         </Routes>
       </BrowserRouter>
     </div>
