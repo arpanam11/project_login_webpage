@@ -17,12 +17,16 @@ const Login = () => {
   const validateCredentials = () => {
 
     if (username.trim() === '') {
-      setErrorMessage('Username cannot be empty.');
+      setErrorMessage('Username cannot be empty. ');
+
       return false;
+
     }
     if (password.trim() === '') {
-      setErrorMessage('Password cannot be empty.');
+      setErrorMessage('Password cannot be empty. ');
+
       return false;
+
     }
 
     const validUser = {
@@ -31,7 +35,7 @@ const Login = () => {
     };
 
     if (username !== validUser.username || password !== validUser.password) {
-      setErrorMessage('Invalid username or password.');
+      setErrorMessage('Invalid Username or password.');
       return false;
     }
 

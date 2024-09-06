@@ -44,15 +44,6 @@
         "state": "delhi",
         "city": "delhi"
       }
-    },
-    {
-      "id": "65b9",
-      "projectName": "rf",
-      "location": {
-        "country": "fff",
-        "state": "fff",
-        "city": "fff"
-      }
     }
   ]
 }
