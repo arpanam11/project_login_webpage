@@ -21,6 +21,7 @@ const Project = () => {
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
+  const [image, setImage] = useState(null); // New state for image
   const [formData, setFormData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -39,18 +40,28 @@ const Project = () => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result); // Store the Base64 string
+    };
+    reader.readAsDataURL(file); // Convert the image to Base64 format
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const projectData = {
       projectName,
       location: {
         country,
         state,
-        city
-      }
+        city,
+      },
+      image, // Add the Base64 image string here
     };
-
+  
     try {
       if (isEditing) {
         await axios.put(`http://localhost:5000/project/${currentProjectId}`, projectData);
@@ -64,6 +75,7 @@ const Project = () => {
       setCountry('');
       setState('');
       setCity('');
+      setImage(null);
       setIsModalOpen(false);
       setIsEditing(false);
       setCurrentProjectId(null);
@@ -72,12 +84,14 @@ const Project = () => {
       Swal.fire('Error', 'An error occurred while saving the project.', 'error');
     }
   };
+  
 
   const handleEdit = (project) => {
     setProjectName(project.projectName);
-    setCountry(project.location.country);
-    setState(project.location.state);
-    setCity(project.location.city);
+    setCountry(project.country);
+    setState(project.state);
+    setCity(project.city);
+    setImage(project.image)
     setCurrentProjectId(project.id);
     setIsEditing(true);
     setIsModalOpen(true);
@@ -107,6 +121,14 @@ const Project = () => {
   };
 
   const columns = [
+    {
+      field: 'image',
+      headerName: 'Image',
+      width: 150,
+      renderCell: (params) => (
+        <img src={params.row.image} alt={params.row.projectName} style={{ width: '50px', height: '50px' ,borderRadius:'50%'}} />
+      ),
+    },
     { field: 'projectName', headerName: 'Project Name', width: 200 },
     { field: 'country', headerName: 'Country', width: 150 },
     { field: 'state', headerName: 'State', width: 150 },
@@ -135,6 +157,7 @@ const Project = () => {
         </>
       ),
     },
+   
   ];
 
   const rows = formData.map((project) => ({
@@ -143,6 +166,7 @@ const Project = () => {
     country: project.location.country,
     state: project.location.state,
     city: project.location.city,
+    image: project.image, // Include the image field here
   }));
 
   return (
@@ -209,6 +233,12 @@ const Project = () => {
                 required
                 fullWidth
                 margin="normal"
+              />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                style={{ marginTop: '15px' }}
               />
               <DialogActions>
                 <Button onClick={() => setIsModalOpen(false)} color="error" variant="contained">
