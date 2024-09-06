@@ -17,11 +17,12 @@ const Login = () => {
   const validateCredentials = () => {
 
     if (username.trim() === '') {
-      setErrorMessage('Username cannot be empty.');
+      setErrorMessage('Username cannot be empty !.');
+      //nmsg
       return false;
     }
     if (password.trim() === '') {
-      setErrorMessage('Password cannot be empty.');
+      setErrorMessage('Password cannot be empty !.');
       return false;
     }
 
