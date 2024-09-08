@@ -26,6 +26,7 @@ const Homepage = () => {
       const { city, country } = item.location;
       try {
         const response = await axios.get(
+          //open weather API
           `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`
         );
         return { city, weather: response.data };
