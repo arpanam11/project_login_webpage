@@ -17,6 +17,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Swal from 'sweetalert2';
 import Select from 'react-select'; // For dropdowns
 import { Country, State, City } from 'country-state-city'; // For country-state-city data
+import Fileupload from '../common/Fileupload';
 
 const Project = () => {
   const [projectName, setProjectName] = useState('');
@@ -42,8 +43,7 @@ const Project = () => {
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (file) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setImage(reader.result); // Store the Base64 string
@@ -53,7 +53,7 @@ const Project = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const projectData = {
       projectName,
       location: {
@@ -63,7 +63,7 @@ const Project = () => {
       },
       image, // Add the Base64 image string here
     };
-  
+
     try {
       if (isEditing) {
         await axios.put(`http://localhost:5000/project/${currentProjectId}`, projectData);
@@ -218,7 +218,7 @@ const Project = () => {
                 fullWidth
                 margin="normal"
               />
-               <br></br>
+              <br />
               <label>Location</label>
               <Select
                 options={Country.getAllCountries().map((country) => ({ value: country, label: country.name }))}
@@ -255,30 +255,12 @@ const Project = () => {
                   required
                 />
               )}
-               <br></br>
-
-               <label>Project Image</label>
-
-{/* Image Upload */}
-<TextField
-  type="file"
-  accept="image/*"
-  fullWidth
-  onChange={handleImageChange}
-  style={{ marginTop: '15px' }}
-/>
-
-{/* Image Preview (for edit mode) */}
-{image && (
-  <div style={{ marginTop: '15px' }}>
-    <Typography variant="subtitle1">Current Image:</Typography>
-    <img
-      src={image}
-      alt="Current Project"
-      style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: '5px' }}
-    />
-  </div>
-)}
+              <br />
+              <label>Project Image</label>
+              <Fileupload
+                onChange={handleImageChange}
+                image={image}
+              />
               <DialogActions className='mt-5'>
                 <Button onClick={() => setIsModalOpen(false)} color="error" variant="contained">
                   Cancel

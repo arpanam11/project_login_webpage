@@ -19,6 +19,30 @@ const Homepage = () => {
       console.error(err.message);
     }
   };
+  const getWeatherData = async () => {
+    const apiKey = 'YOUR_OPENWEATHER_API_KEY'; // Replace with your OpenWeather API key
+
+    const weatherPromises = projectData.map(async (item) => {
+      const { city, country } = item.location;
+      try {
+        const response = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${apiKey}&units=metric`
+        );
+        return { city, weather: response.data };
+      } catch (err) {
+        console.error(`Failed to fetch weather for ${city}, ${country}:`, err);
+        return { city, weather: null };
+      }
+    });
+
+    const weatherResults = await Promise.all(weatherPromises);
+    setWeatherData(weatherResults);
+    console.log('Weather data fetched:', weatherResults);
+  };
+  const getWeatherForCity = (city) => {
+    const weather = weatherData.find((data) => data.city === city);
+    return weather ? weather.weather : null;
+  };
 
   return (
     <Layout>
@@ -32,6 +56,28 @@ const Homepage = () => {
                     <Typography variant="h6">
                       {item.projectName}
                     </Typography>
+
+                    <div className='d-flex'>
+                      <div>      <img
+                        src={item.image}
+                        alt={item.projectName}
+                        style={{ width: '90px', height: '90px', borderRadius: "10%" }}
+                      /></div>
+                      <div>  <p>  {item.location.country}</p>
+                      {getWeatherForCity(item.location.city) ? (
+                      <div>
+                        <p>Temperature: {getWeatherForCity(item.location.city).main.temp} °C</p>
+                        <p>Weather: {getWeatherForCity(item.location.city).weather[0].description}</p>
+                        <p>Humidity: {getWeatherForCity(item.location.city).main.humidity}%</p>
+                      </div>
+                    ) : (
+                      <p>Loading weather...</p>
+                    )}
+                      </div>
+                    </div>
+
+
+
                   </CardContent>
                 </Card>
               ))}
